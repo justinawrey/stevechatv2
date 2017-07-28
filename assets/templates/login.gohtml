@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>login</title>
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/override.css">
+  </head>
+  <body>
+    <div class="container">
+      <div id="lpanel" class="panel panel-default">
+        <div class="panel-body">
+          <h1 class="text-center">enter username</h1>
+          <form action="/login" method="post">
+            <div class="input-group">
+              <input autofocus=true type="text" class="form-control" name="un" placeholder="..." required>
+              <span class="input-group-btn">
+                <button class="btn btn-default" type="submit">submit</button>
+              </span>
+            </div>
+          </form><br>
+          <i>{{.}}</i>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

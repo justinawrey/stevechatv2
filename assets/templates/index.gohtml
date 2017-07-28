@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>stevechat</title>
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/override.css">
+  </head>
+  <body>
+    <h1 class="text-center">stevechat</h1>
+    <div class="container">
+      <div id="mpanel" class="panel panel-default">
+        <div id="mcontainer" class="panel-body">
+        </div>
+      </div>
+      <div class="input-group">
+        <div class="input-group-addon"><strong>{{.}} > </strong></div>
+        <input autofocus=true id="tb" type="text" class="form-control" placeholder="...">
+        <span class="input-group-btn">
+          <button id="ib" class="btn btn-default" type="submit">send</button>
+        </span>
+      </div>
+    </div>
+  </body>
+  <script type="text/javascript">
+    window.onload = function() {  // make sure html is fully loaded
+      if (window.WebSocket) { // check to ensure browser supports websockets
+
+        var websocket = new WebSocket("ws://localhost:8080/ws");
+
+        // set up websocket handling
+        websocket.onmessage = function(event){
+          var mcontainer = document.getElementById("mcontainer");
+          mcontainer.innerText += event.data + "\n";
+          mcontainer.scrollTop = mcontainer.scrollHeight;
+        }
+        // end websocket handling
+
+        // set up event handling for message sending - i.e. on button click
+        // or enter key press when in chat box
+        var sendMessage = function() {
+          var textBox = document.getElementById("tb")
+          if(tb.value !== "") { // do not allow user to send nothing
+            websocket.send(tb.value);
+            tb.value = "";
+            tb.focus();
+          }
+        }
+
+        document.getElementById("ib").onclick = sendMessage;
+        document.getElementById("tb").onkeypress = function(event) {
+          if(event.keyCode == 13) {
+            sendMessage();
+          }
+        }
+        // end message event handling
+
+      } else {
+        alert("Error: browser does not support websockets.");
+      }
+    }
+  </script>
+</html>
