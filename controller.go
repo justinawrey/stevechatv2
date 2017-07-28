@@ -8,7 +8,6 @@ import (
 	"github.com/gorilla/websocket"
 )
 
-var conns = 0
 var tpls = template.Must(template.ParseGlob("assets/templates/*.gohtml"))
 
 func handleIndex(w http.ResponseWriter, req *http.Request) {
@@ -24,7 +23,6 @@ func handleIndex(w http.ResponseWriter, req *http.Request) {
 }
 
 func handleWebsocket(w http.ResponseWriter, req *http.Request) {
-	conns++
 	upgrader := websocket.Upgrader{
 		ReadBufferSize:  1024,
 		WriteBufferSize: 1024,
