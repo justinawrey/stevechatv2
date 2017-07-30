@@ -10,7 +10,7 @@
     <h1 class="text-center">stevechat</h1>
     <div class="container">
       <div id="mpanel" class="panel panel-default">
-        <div isd="mcontainer" class="panel-body">
+        <div id="mcontainer" class="panel-body">
         {{range .Messages}}
         {{.}}
         {{end}}
@@ -24,8 +24,7 @@
         </span>
       </div>
     </div>
-  </body>
-  <script type="text/javascript">
+    <script type="text/javascript">
     window.onload = function() {  // make sure html is fully loaded
       if (window.WebSocket) { // check to ensure browser supports websockets
 
@@ -63,5 +62,6 @@
         alert("Error: browser does not support websockets.");
       }
     }
-  </script>
+    </script>
+  </body>
 </html>

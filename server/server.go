@@ -1,6 +1,10 @@
 package server
 
-import "time"
+import (
+	"log"
+	"regexp"
+	"time"
+)
 
 // Message - a chat formatted message
 type Message struct {
@@ -61,9 +65,19 @@ func (s *Server) Serve() {
 func (s Server) ValidateUsername(un string) (bool, string) {
 	// validate username
 	// need to do extra validation here
-	if un == "SYSTEM" {
+	if un == "SYSTEM" { // reserved
 		return false, "username is invalid"
 	}
+
+	reg, err := regexp.Compile("^[a-zA-Z0-9_]{3,15}$")
+	if err != nil {
+		log.Fatalln(err)
+	}
+
+	if !reg.MatchString(un) {
+		return false, "invalid username - use format ^[a-zA-Z0-9_]{3,15}$"
+	}
+
 	// check against existing usernames
 	for _, ssn := range s.Sessions {
 		if ssn.Username == un {
