@@ -10,11 +10,14 @@
     <h1 class="text-center">stevechat</h1>
     <div class="container">
       <div id="mpanel" class="panel panel-default">
-        <div id="mcontainer" class="panel-body">
+        <div isd="mcontainer" class="panel-body">
+        {{range .Messages}}
+        {{.}}
+        {{end}}
         </div>
       </div>
       <div class="input-group">
-        <div class="input-group-addon"><strong>{{.}} > </strong></div>
+        <div class="input-group-addon"><strong>{{.User}} > </strong></div>
         <input autofocus=true id="tb" type="text" class="form-control" placeholder="...">
         <span class="input-group-btn">
           <button id="ib" class="btn btn-default" type="submit">send</button>
@@ -31,7 +34,8 @@
         // set up websocket handling
         websocket.onmessage = function(event){
           var mcontainer = document.getElementById("mcontainer");
-          mcontainer.innerText += event.data + "\n";
+          // display message and scroll to bottom of chat
+          mcontainer.innerHTML += event.data;
           mcontainer.scrollTop = mcontainer.scrollHeight;
         }
         // end websocket handling
